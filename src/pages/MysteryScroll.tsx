@@ -7,6 +7,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+
 const MysteryScroll = () => {
   useEffect(() => {
     const numLines = 10;

@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import { ThreeDMarquee } from "../components/ui/container-scroll-animation";
 import { TextGenerateEffect } from "../components/ui/text-generate-effect";
 import { Tabs } from "../components/tabs";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FeatureCard } from "../components/FeatureCard";
 import {
   Globe,
@@ -14,8 +14,15 @@ import {
   FileText,
   Sparkles,
   PhoneCall,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  ChevronDown,
+  Menu,
+  X
 } from "lucide-react";
-import { CardBody, CardContainer, CardItem } from "@/components/3d-card";
+import Hero from '../pages/hero';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -41,80 +48,37 @@ const cardData = [
 
 function MysteryHeading() {
   const headingRef = useRef(null);
-  const containerRef = useRef(null);
 
   useEffect(() => {
     const heading = headingRef.current;
-    const container = containerRef.current;
-    
-    // Split into words for cleaner, professional animation
+    if (!heading) return;
+
     const text = heading.textContent;
     const words = text.split(' ');
     heading.innerHTML = words.map((word, i) => 
-      `<span class="mystery-word" style="display: inline-block; margin-right: 0.25em;">${word}</span>`
+      `<span class="mystery-word inline-block mr-1 opacity-0 transform translate-y-8">${word}</span>`
     ).join('');
 
     const wordElements = heading.querySelectorAll('.mystery-word');
-
-    // Clean, professional initial state
-    gsap.set(wordElements, {
-      y: 60,
-      opacity: 0,
-      rotationX: -45,
-      transformOrigin: "center bottom"
+    
+    // Animate words in
+    wordElements.forEach((word, index) => {
+      setTimeout(() => {
+        word.style.transition = 'all 0.6s ease-out';
+        word.style.opacity = '1';
+        word.style.transform = 'translateY(0)';
+      }, index * 100);
     });
-
-    // Subtle background particles
-    gsap.to(".bg-particle", {
-      y: "random(-20, 20)",
-      x: "random(-15, 15)",
-      duration: "random(8, 12)",
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      stagger: 0.5
-    });
-
-    // Professional animation timeline
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: "top 75%",
-        end: "bottom 25%",
-        toggleActions: "play none none reverse"
-      }
-    });
-
-    // Clean entrance animation
-    tl.to(wordElements, {
-      y: 0,
-      opacity: 1,
-      rotationX: 0,
-      duration: 1,
-      ease: "power3.out",
-      stagger: 0.15
-    })
-    // Subtle glow effect
-    .to(wordElements, {
-      textShadow: "0 0 30px rgba(59, 130, 246, 0.4)",
-      duration: 0.6,
-      stagger: 0.08
-    }, "-=0.3");
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
   }, []);
 
   return (
-    <div ref={containerRef} className="relative py-32 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
-      
-      {/* Minimal, professional background */}
+    
+<div className="relative py-32 bg-gradient-to-b from-amber-50 via-yellow-50 to-orange-50 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden opacity-30">
         {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="bg-particle absolute w-1 h-1 bg-blue-400/40 rounded-full"
+            className="absolute w-1 h-1 bg-yellow-400/40 rounded-full animate-pulse"
             style={{
               left: `${20 + Math.random() * 60}%`,
               top: `${20 + Math.random() * 60}%`,
@@ -123,7 +87,6 @@ function MysteryHeading() {
         ))}
       </div>
 
-      {/* Main content */}
       <div className="relative z-10 container mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0 }}
@@ -133,41 +96,31 @@ function MysteryHeading() {
         >
           <h2 
             ref={headingRef}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight tracking-tight"
-            style={{
-              fontFamily: "'Inter', system-ui, sans-serif",
-              fontWeight: 700
-            }}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold text-black leading-tight tracking-tight"
           >
-            The Mystery of Vanishing Customers
+            The Mystery of Vanishing
+          </h2>
+           <h2 
+            ref={headingRef}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold text-black leading-tight tracking-tight"
+          >
+             Customers
           </h2>
         </motion.div>
 
-        {/* Clean, professional subtitle */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="flex items-center justify-center space-x-4"
         >
-          <motion.div 
-            className="w-16 h-px bg-gradient-to-r from-transparent to-blue-400"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          />
-          <p className="text-lg md:text-xl text-gray-300 font-medium">
+          <div className="w-16 h-px bg-gradient-to-r from-transparent to-yellow-400" />
+          <p className="text-lg md:text-xl text-black-300 font-medium">
             Discover the business story
           </p>
-          <motion.div 
-            className="w-16 h-px bg-gradient-to-l from-transparent to-blue-400"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          />
+          <div className="w-16 h-px bg-gradient-to-l from-transparent to-yellow-400" />
         </motion.div>
 
-        {/* Professional icons */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -204,115 +157,209 @@ function MysteryHeading() {
         </motion.div>
       </div>
 
-      {/* Clean bottom transition */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#FAF9F6] to-transparent" />
     </div>
   );
 }
 
+// Cards Scroll Animation Component
 function CardsScrollAnimation() {
-  const containerRef = useRef(null);
+  const [currentPanel, setCurrentPanel] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const comicPanels = [
+    {
+      id: 1,
+      imagePlaceholder: "src/pages/1.jpg"
+    },
+    {
+      id: 2,
+      imagePlaceholder: "src/pages/2.jpg"
+    },
+    {
+      id: 3,
+      imagePlaceholder: "src/pages/3.jpg"
+    },
+    {
+      id: 4,
+      imagePlaceholder: "src/pages/4.jpg"
+    },
+     {
+      id: 5,
+      imagePlaceholder: "src/pages/5.jpg"
+    },
+     {
+      id: 6,
+      imagePlaceholder: "src/pages/6.jpg"
+    },
+     {
+      id: 7,
+      imagePlaceholder: "src/pages/7.jpg"
+    },
+     {
+      id: 8,
+      imagePlaceholder: "src/pages/8.jpg"
+    },
+     {
+      id: 9,
+      imagePlaceholder: "src/pages/9.jpg"
+    },
+     {
+      id: 10,
+      imagePlaceholder: "src/pages/10.jpg"
+    },
+     {
+      id: 11,
+      imagePlaceholder: "src/pages/11.jpg"
+    },
+     {
+      id: 12,
+      imagePlaceholder: "src/pages/12.jpg"
+    },
+  ];
 
   useEffect(() => {
-    cardData.forEach((_, index) => {
-      const isEven = index % 2 === 0;
-      const startX = isEven ? "-120vw" : "120vw";
-      const endX = isEven ? "120vw" : "-120vw";
+    if (isPlaying) {
+      const interval = setInterval(() => {
+        setCurrentPanel((prev) => (prev + 1) % comicPanels.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [isPlaying, comicPanels.length]);
 
-      // Initial state
-      gsap.set(`.scroll-card-${index}`, {
-        x: startX,
-        opacity: 0,
-        scale: 0.7,
-        rotationY: isEven ? -15 : 15,
-      });
+  const nextPanel = () => {
+    setCurrentPanel((prev) => (prev + 1) % comicPanels.length);
+  };
 
-      // Enhanced animation timeline
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: `.scroll-card-${index}`,
-          start: "top 85%",
-          end: "top 15%",
-          scrub: 1.2,
-          onEnter: () => {
-            gsap.to(`.scroll-card-${index}`, {
-              boxShadow: "0 25px 50px rgba(0,0,0,0.3)",
-              duration: 0.3,
-            });
-          },
-          onLeave: () => {
-            gsap.to(`.scroll-card-${index}`, {
-              boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
-              duration: 0.3,
-            });
-          },
-        },
-      })
-      .to(`.scroll-card-${index}`, {
-        x: 0,
-        opacity: 1,
-        scale: 1,
-        rotationY: 0,
-        duration: 1.5,
-        ease: "power2.out",
-      })
-      .to(`.scroll-card-${index}`, {
-        x: endX,
-        opacity: 0,
-        scale: 0.7,
-        rotationY: isEven ? 15 : -15,
-        duration: 1.5,
-        ease: "power2.in",
-      });
-    });
+  const prevPanel = () => {
+    setCurrentPanel((prev) => (prev - 1 + comicPanels.length) % comicPanels.length);
+  };
 
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
-  }, []);
+  const goToPanel = (index) => {
+    setCurrentPanel(index);
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
 
   return (
-    <div className="relative bg-gradient-to-b from-slate-900 via-slate-800 to-black py-40" ref={containerRef}>
-      <div className="relative w-full flex flex-col items-center space-y-32">
-        {cardData.map((card, index) => (
-          <div key={index} className={`scroll-card scroll-card-${index}`}>
-            <CardContainer className="inter-var">
-              <CardBody className="bg-gray-50 relative group/card dark:bg-black border rounded-xl p-3 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
-                <CardItem translateZ="100" className="w-full">
-                  <img
-                    src={card.image}
-                    alt={`RevenueGear feature ${index + 1}`}
-                    className="w-auto h-auto max-w-full max-h-96 rounded-lg mx-auto block"
-                    style={{
-                      objectFit: 'contain',
-                      objectPosition: 'center'
-                    }}
-                  />
-                </CardItem>
-              </CardBody>
-            </CardContainer>
-          </div>
-        ))}
-      </div>
+    <section className="py-24 bg-gradient-to-b from-amber-50 via-yellow-50 to-orange-50">
       
-      {/* Added floating particles for visual enhancement */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-blue-400/20 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
-            }}
-          />
-        ))}
+      <div className="container mx-auto px-6">
+        <div className="max-w-4xl mx-auto">
+<div className="relative py-32 bg-gradient-to-b from-white-50 via-amber-100 to-white-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-amber-600 to-yellow-700 text-white text-center py-6">
+            </div>
+
+            <div className="relative h-6 md:h-[705px] bg-amber-900 overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentPanel}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0"
+                >
+                  <img
+                    src={comicPanels[currentPanel].imagePlaceholder}
+                    alt={`Comic Panel ${comicPanels[currentPanel].id}`}
+                    className="w-full h-half object-cover"
+                  />
+                  
+                  
+                        
+                        
+                </motion.div>
+              </AnimatePresence>
+
+              <button
+                onClick={prevPanel}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-amber-500/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-amber-500/30 transition-all duration-300 z-10"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                onClick={nextPanel}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-amber-500/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-amber-500/30 transition-all duration-300 z-10"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
+
+            <div className="bg-amber-50 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={togglePlayPause}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all duration-300 ${
+                      isPlaying 
+                        ? 'bg-amber-600 text-white hover:bg-amber-700' 
+                        : 'bg-yellow-600 text-white hover:bg-yellow-700'
+                    }`}
+                  >
+                    {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                    {isPlaying ? 'Pause' : 'Play'}
+                  </button>
+                  <span className="text-amber-800 font-medium">
+                    Panel {currentPanel + 1} of {comicPanels.length}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex justify-center gap-2 mb-4">
+                {comicPanels.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToPanel(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentPanel 
+                        ? 'bg-yellow-600 scale-125' 
+                        : 'bg-amber-300 hover:bg-amber-400'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <div className="w-full bg-amber-300 rounded-full h-2">
+                <motion.div
+                  className="bg-gradient-to-r from-yellow-600 to-amber-600 h-2 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${((currentPanel + 1) / comicPanels.length) * 100}%` }}
+                  transition={{ duration: 0.5 }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 overflow-x-auto">
+            <div className="flex gap-4 pb-4">
+              {comicPanels.map((panel, index) => (
+                <button
+                  key={panel.id}
+                  onClick={() => goToPanel(index)}
+                  className={`flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                    index === currentPanel 
+                      ? 'border-amber-600 scale-110' 
+                      : 'border-amber-300 hover:border-amber-500'
+                  }`}
+                >
+                  <img
+                    src={panel.imagePlaceholder}
+                    alt={`Panel ${panel.id}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
+
 
 export default function Index() {
   const images = [
@@ -419,11 +466,11 @@ export default function Index() {
   ];
 
   return (
-    <div className="bg-[#FAF9F6] text-[#333333]">
+    <div className="bg-gradient-to-b from-amber-50 via-yellow-50 to-orange-50 text-[#333333]">
       <Navbar />
       <div className="relative h-[40rem] overflow-hidden">
         <ThreeDMarquee images={images} />
-        <div className="absolute inset-0 bg-black/60 z-10" />
+        <div className="absolute inset-0 bg-amber-900/60 z-10" />
         <div className="absolute inset-0 flex items-center justify-center z-20 px-4 text-center">
           <div>
             <motion.h1
@@ -435,7 +482,7 @@ export default function Index() {
               Welcome to RevenueGear
             </motion.h1>
             <motion.p
-              className="mt-4 text-lg md:text-2xl text-gray-200 max-w-3xl mx-auto"
+              className="mt-4 text-lg md:text-2xl text-amber-100 max-w-3xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -452,6 +499,7 @@ export default function Index() {
           <TextGenerateEffect words={words} />
         </div>
       </div>
+            <Hero />
 
       <MysteryHeading />
 
@@ -460,6 +508,7 @@ export default function Index() {
       <div className="w-full px-4 md:px-0 max-w-17xl mx-auto mt-20 mb-40">
         <Tabs tabs={tabs} />
       </div>
+
     </div>
   );
 }
