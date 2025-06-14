@@ -13,6 +13,7 @@ import {
   FlaskConical,
   FileText,
   Sparkles,
+  PhoneCall,
 } from "lucide-react";
 import { CardBody, CardContainer, CardItem } from "@/components/3d-card";
 import { gsap } from "gsap";
@@ -37,6 +38,177 @@ const cardData = [
   { image: "src/pages/11.jpg" },
   { image: "src/pages/12.jpg" },
 ];
+
+function MysteryHeading() {
+  const headingRef = useRef(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const heading = headingRef.current;
+    const container = containerRef.current;
+    
+    // Split into words for cleaner, professional animation
+    const text = heading.textContent;
+    const words = text.split(' ');
+    heading.innerHTML = words.map((word, i) => 
+      `<span class="mystery-word" style="display: inline-block; margin-right: 0.25em;">${word}</span>`
+    ).join('');
+
+    const wordElements = heading.querySelectorAll('.mystery-word');
+
+    // Clean, professional initial state
+    gsap.set(wordElements, {
+      y: 60,
+      opacity: 0,
+      rotationX: -45,
+      transformOrigin: "center bottom"
+    });
+
+    // Subtle background particles
+    gsap.to(".bg-particle", {
+      y: "random(-20, 20)",
+      x: "random(-15, 15)",
+      duration: "random(8, 12)",
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+      stagger: 0.5
+    });
+
+    // Professional animation timeline
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top 75%",
+        end: "bottom 25%",
+        toggleActions: "play none none reverse"
+      }
+    });
+
+    // Clean entrance animation
+    tl.to(wordElements, {
+      y: 0,
+      opacity: 1,
+      rotationX: 0,
+      duration: 1,
+      ease: "power3.out",
+      stagger: 0.15
+    })
+    // Subtle glow effect
+    .to(wordElements, {
+      textShadow: "0 0 30px rgba(59, 130, 246, 0.4)",
+      duration: 0.6,
+      stagger: 0.08
+    }, "-=0.3");
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative py-32 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+      
+      {/* Minimal, professional background */}
+      <div className="absolute inset-0 overflow-hidden opacity-30">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="bg-particle absolute w-1 h-1 bg-blue-400/40 rounded-full"
+            style={{
+              left: `${20 + Math.random() * 60}%`,
+              top: `${20 + Math.random() * 60}%`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Main content */}
+      <div className="relative z-10 container mx-auto px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <h2 
+            ref={headingRef}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight tracking-tight"
+            style={{
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontWeight: 700
+            }}
+          >
+            The Mystery of Vanishing Customers
+          </h2>
+        </motion.div>
+
+        {/* Clean, professional subtitle */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="flex items-center justify-center space-x-4"
+        >
+          <motion.div 
+            className="w-16 h-px bg-gradient-to-r from-transparent to-blue-400"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          />
+          <p className="text-lg md:text-xl text-gray-300 font-medium">
+            Discover the business story
+          </p>
+          <motion.div 
+            className="w-16 h-px bg-gradient-to-l from-transparent to-blue-400"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          />
+        </motion.div>
+
+        {/* Professional icons */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.6 }}
+          className="mt-12 flex justify-center space-x-8"
+        >
+          {[
+            { icon: '📊', label: 'Analytics' },
+            { icon: '🎯', label: 'Strategy' },
+            { icon: '💼', label: 'Business' },
+            { icon: '🔍', label: 'Insights' }
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              className="flex flex-col items-center space-y-2 opacity-70 hover:opacity-100 transition-opacity duration-300"
+              animate={{
+                y: [0, -8, 0]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                delay: i * 0.5,
+                ease: "easeInOut"
+              }}
+            >
+              <div className="text-2xl md:text-3xl">
+                {item.icon}
+              </div>
+              <span className="text-xs text-gray-400 font-medium">
+                {item.label}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Clean bottom transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#FAF9F6] to-transparent" />
+    </div>
+  );
+}
 
 function CardsScrollAnimation() {
   const containerRef = useRef(null);
@@ -196,7 +368,7 @@ export default function Index() {
         <FeatureCard
           icon={<Settings className="w-6 h-6 text-white" />}
           title="Detects All Revenue Leaks"
-          description="Keeps all backend services running at 99.9% uptime with proactive error monitoring"
+          description="Spots churn risk, repeat complaints, overcharging, missed follow-ups, and poor service signals."
         />
       ),
     },
@@ -207,29 +379,40 @@ export default function Index() {
         <FeatureCard
           icon={<FlaskConical className="w-6 h-6 text-white" />}
           title="Automatic Complaint Classification"
-          description="Experiment and train models in real-time with <1.5% error rate"
+          description="Instantly tags and organizes complaints into actionable categories—no manual effort needed."
         />
       ),
     },
     {
-      title: "Content",
-      value: "content",
+      title: "100% Visibility on All Recorded Calls",
+      value: "100% Visibility on All Recorded Calls",
       content: (
         <FeatureCard
-          icon={<FileText className="w-6 h-6 text-white" />}
+          icon={<PhoneCall className="w-6 h-6 text-white" />}
           title="Content Hub"
-          description="Create, monitor, and optimize content with 72%+ user engagement"
+          description="Reviews of all customer calls including Maintenance Reminders and Post Service Follow Up."
         />
       ),
     },
     {
-      title: "Random",
-      value: "random",
+      title: "Customer Sentiment Score",
+      value: "Customer Sentiment Score",
+      content: (
+        <FeatureCard
+          icon={<Sparkles className="w-6 h-6 text-white" />}
+          title="Random Insight"
+          description="Measures how happy or frustrated each customer is, using voice tone and language cues."
+        />
+      ),
+    },
+    {
+      title: "Voice of Customer Dashboard",
+      value: "Voice of Customer Dashboard",
       content: (
         <FeatureCard
           icon={<Sparkles className="w-6 h-6 text-white" />}
           title="Random Insights"
-          description="Explore surprise metrics and live experiments to uncover hidden patterns"
+          description="One powerful dashboard to track negative & positive feedback, trends, and team performance."
         />
       ),
     },
@@ -270,9 +453,11 @@ export default function Index() {
         </div>
       </div>
 
+      <MysteryHeading />
+
       <CardsScrollAnimation />
 
-      <div className="w-full px-4 md:px-0 max-w-6xl mx-auto mt-20 mb-40">
+      <div className="w-full px-4 md:px-0 max-w-17xl mx-auto mt-20 mb-40">
         <Tabs tabs={tabs} />
       </div>
     </div>
