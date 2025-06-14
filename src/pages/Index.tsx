@@ -495,10 +495,11 @@ export default function Index() {
       </div>
 
       <div className="container mx-auto px-6 py-24 max-w-6xl text-center">
-        <div className="text-4xl md:text-5xl font-semibold leading-relaxed">
-          <TextGenerateEffect words={words} />
-        </div>
-      </div>
+  <div   className="text-5xl md:text-7xl font-extrabold text-amber-900">
+    <TextGenerateEffect words={words} />
+  </div>
+</div>
+
             <Hero />
 
       <MysteryHeading />
