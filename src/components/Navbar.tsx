@@ -22,7 +22,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 backdrop-blur-sm border-b border-amber-200/50 shadow-lg">
+    <nav className="bg-white border-b border-amber-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left - SERVICES */}
@@ -30,15 +30,12 @@ const Navbar = () => {
             <button
               onClick={() => setIsServicesOpen((prev) => !prev)}
               aria-expanded={isServicesOpen}
-              className="flex items-center gap-1 text-amber-800 hover:text-amber-600 font-semibold focus:outline-none transition duration-300 group"
+              className="flex items-center gap-1 text-gray-700 hover:text-amber-600 font-medium focus:outline-none transition duration-200"
             >
-              <span className="text-sm md:text-base tracking-wide relative">
-                SERVICES
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all duration-300"></span>
-              </span>
+              <span className="text-sm md:text-base tracking-wide">SERVICES</span>
               <ChevronDown
-                className={`w-4 h-4 transform transition-transform duration-300 ${
-                  isServicesOpen ? 'rotate-180 text-amber-600' : ''
+                className={`w-4 h-4 transform transition-transform duration-200 ${
+                  isServicesOpen ? 'rotate-180' : ''
                 }`}
               />
             </button>
@@ -47,7 +44,7 @@ const Navbar = () => {
 
           {/* Center - Logo */}
           <div className="text-center">
-            <span className="text-xl md:text-2xl font-extrabold tracking-wide bg-gradient-to-r from-amber-700 via-yellow-600 to-orange-600 bg-clip-text text-transparent drop-shadow-sm">
+            <span className="text-xl md:text-2xl font-bold tracking-wide text-amber-600">
               REVENUEGEAR
             </span>
           </div>
@@ -56,7 +53,7 @@ const Navbar = () => {
           <div className="text-right">
             <button
               onClick={handleContactUs}
-              className="bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500 hover:from-amber-600 hover:via-yellow-600 hover:to-orange-600 text-white px-6 py-2.5 rounded-full font-semibold text-sm md:text-base shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5 border border-amber-400/30"
+              className="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-lg font-medium text-sm md:text-base transition duration-200"
             >
               CONTACT US
             </button>
