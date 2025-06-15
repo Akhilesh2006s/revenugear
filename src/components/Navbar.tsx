@@ -7,7 +7,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
 
   const handleContactUs = () => {
-    window.open('https://example.com/contact', '_blank');
+    window.open('https://revlabs.tech/#contact', '_blank');
   };
 
   // Close dropdown on outside click
@@ -32,7 +32,7 @@ const Navbar = () => {
               aria-expanded={isServicesOpen}
               className="flex items-center gap-1 text-gray-700 hover:text-amber-600 font-medium focus:outline-none transition duration-200"
             >
-              <span className="text-sm md:text-base tracking-wide">SERVICES</span>
+              <span className="text-sm md:text-base tracking-wide">ABOUT US</span>
               <ChevronDown
                 className={`w-4 h-4 transform transition-transform duration-200 ${
                   isServicesOpen ? 'rotate-180' : ''
