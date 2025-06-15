@@ -1,67 +1,106 @@
-import { useState, useRef, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
-import ServicesDropdown from './ServicesDropdown';
+"use client"
+import type React from "react"
+import { motion } from "framer-motion"
 
-const Navbar = () => {
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const dropdownRef = useRef(null);
+const transition = {
+  type: "spring",
+  mass: 0.5,
+  damping: 11.5,
+  stiffness: 100,
+  restDelta: 0.001,
+  restSpeed: 0.001,
+}
 
-  const handleContactUs = () => {
-    window.open('https://example.com/contact', '_blank');
-  };
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsServicesOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
+export const MenuItem = ({
+  setActive,
+  active,
+  item,
+  children,
+}: {
+  setActive: (item: string) => void
+  active: string | null
+  item: string
+  children?: React.ReactNode
+}) => {
   return (
-    <nav className="bg-white border-b border-amber-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Left - SERVICES */}
-          <div className="relative" ref={dropdownRef}>
-            <button
-              onClick={() => setIsServicesOpen((prev) => !prev)}
-              aria-expanded={isServicesOpen}
-              className="flex items-center gap-1 text-gray-700 hover:text-amber-600 font-medium focus:outline-none transition duration-200"
-            >
-              <span className="text-sm md:text-base tracking-wide">SERVICES</span>
-              <ChevronDown
-                className={`w-4 h-4 transform transition-transform duration-200 ${
-                  isServicesOpen ? 'rotate-180' : ''
-                }`}
-              />
-            </button>
-            <ServicesDropdown isOpen={isServicesOpen} onClose={() => setIsServicesOpen(false)} />
-          </div>
+    <div onMouseEnter={() => setActive(item)} className="relative">
+      <motion.p
+        transition={{ duration: 0.3 }}
+        className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white text-center font-medium"
+      >
+        {item}
+      </motion.p>
+      {active !== null && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={transition}
+        >
+          {active === item && (
+            <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4">
+              <motion.div
+                transition={transition}
+                layoutId="active"
+                className="bg-white dark:bg-black backdrop-blur-sm rounded-lg overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl"
+              >
+                <motion.div layout className="w-max h-full p-4">
+                  {children}
+                </motion.div>
+              </motion.div>
+            </div>
+          )}
+        </motion.div>
+      )}
+    </div>
+  )
+}
 
-          {/* Center - Logo */}
-          <div className="text-center">
-            <span className="text-xl md:text-2xl font-bold tracking-wide text-amber-600">
-              REVENUEGEAR
-            </span>
-          </div>
+export const Menu = ({
+  setActive,
+  children,
+}: {
+  setActive: (item: string | null) => void
+  children: React.ReactNode
+}) => {
+  return (
+    <div onMouseLeave={() => setActive(null)} className="flex justify-center items-center space-x-8">
+      {children}
+    </div>
+  )
+}
 
-          {/* Right - Contact Button */}
-          <div className="text-right">
-            <button
-              onClick={handleContactUs}
-              className="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-lg font-medium text-sm md:text-base transition duration-200"
-            >
-              CONTACT US
-            </button>
-          </div>
-        </div>
+export const ProductItem = ({
+  title,
+  description,
+  href,
+  src,
+}: {
+  title: string
+  description: string
+  href: string
+  src: string
+}) => {
+  return (
+    <a href={href} className="flex space-x-2">
+      <img
+        src={src || "/placeholder.svg"}
+        width={140}
+        height={70}
+        alt={title}
+        className="shrink-0 rounded-md shadow-2xl"
+      />
+      <div>
+        <h4 className="text-xl font-bold mb-1 text-black dark:text-white">{title}</h4>
+        <p className="text-neutral-700 text-sm max-w-[10rem] dark:text-neutral-300">{description}</p>
       </div>
-    </nav>
-  );
-};
+    </a>
+  )
+}
 
-export default Navbar;
+export const HoveredLink = ({ children, ...rest }: any) => {
+  return (
+    <a {...rest} className="text-neutral-700 dark:text-neutral-200 hover:text-black block">
+      {children}
+    </a>
+  )
+}
