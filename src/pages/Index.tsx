@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import { ThreeDMarquee } from "../components/ui/container-scroll-animation";
-import { TextGenerateEffect } from "../components/ui/text-generate-effect";
+import { TypewriterEffectSmooth } from "../components/ui/text-generate-effect";
 import { Tabs } from "../components/tabs";
 import { motion, AnimatePresence } from "framer-motion";
 import { FeatureCard } from "../components/FeatureCard";
@@ -28,7 +28,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const words = `95% of customer calls at a vehicle dealership are never reviewed. That's why customers leave silently.`;
+ const words = [
+  { text: "95% of customer calls at a vehicle dealership" },
+  { text: "are never reviewed." },
+  {
+    text: "That’s why customers leave silently.",
+    className: "text-yellow-500 dark:text-orange-500",
+  },
+];
+
 
 // Card data with natural sizing
 const cardData = [
@@ -493,12 +501,12 @@ export default function Index() {
       {/* Text Generate Effect Section */}
       <div className="container mx-auto px-6 py-24 max-w-6xl text-center">
         <div className="text-5xl md:text-7xl font-extrabold text-amber-900">
-          <TextGenerateEffect words={words} />
+          <TypewriterEffectSmooth words={words} />
         </div>
       </div>
 
       {/* Hero Component */}
-      <div className="relative z-10 mb-20">
+      <div className="relative z-10 mb-20 mt-30">
         <Hero />
       </div>
 
