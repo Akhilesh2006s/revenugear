@@ -170,51 +170,51 @@ function CardsScrollAnimation() {
   const comicPanels = [
     {
       id: 1,
-      imagePlaceholder: "src/pages/1.jpg"
+      imagePlaceholder: "images/1.jpg"
     },
     {
       id: 2,
-      imagePlaceholder: "src/pages/2.jpg"
+      imagePlaceholder: "images/2.jpg"
     },
     {
       id: 3,
-      imagePlaceholder: "src/pages/3.jpg"
+      imagePlaceholder: "images/3.jpg"
     },
     {
       id: 4,
-      imagePlaceholder: "src/pages/4.jpg"
+      imagePlaceholder: "images/4.jpg"
     },
      {
       id: 5,
-      imagePlaceholder: "src/pages/5.jpg"
+      imagePlaceholder: "images/5.jpg"
     },
      {
       id: 6,
-      imagePlaceholder: "src/pages/6.jpg"
+      imagePlaceholder: "images/6.jpg"
     },
      {
       id: 7,
-      imagePlaceholder: "src/pages/7.jpg"
+      imagePlaceholder: "images/7.jpg"
     },
      {
       id: 8,
-      imagePlaceholder: "src/pages/8.jpg"
+      imagePlaceholder: "images/8.jpg"
     },
      {
       id: 9,
-      imagePlaceholder: "src/pages/9.jpg"
+      imagePlaceholder: "images/9.jpg"
     },
      {
       id: 10,
-      imagePlaceholder: "src/pages/10.jpg"
+      imagePlaceholder: "images/10.jpg"
     },
      {
       id: 11,
-      imagePlaceholder: "src/pages/11.jpg"
+      imagePlaceholder: "images/11.jpg"
     },
      {
       id: 12,
-      imagePlaceholder: "src/pages/12.jpg"
+      imagePlaceholder: "images/12.jpg"
     },
   ];
 
