@@ -32,9 +32,9 @@ const words = `95% of customer calls at a vehicle dealership are never reviewed.
 
 // Card data with natural sizing
 const cardData = [
-  { image: "/images/1.jpg" },
-  { image: "public/images/2.jpg" },
-  { image: "public/images/3.jpg" },
+  { image: "src/pages/1.jpg" },
+  { image: "src/pages/2.jpg" },
+  { image: "src/pages/3.jpg" },
   { image: "src/pages/4.jpg" },
   { image: "src/pages/5.jpg" },
   { image: "src/pages/6.jpg" },
@@ -72,8 +72,7 @@ function MysteryHeading() {
   }, []);
 
   return (
-    
-<div className="relative py-32 bg-gradient-to-b from-amber-50 via-yellow-50 to-orange-50 overflow-hidden">
+    <div className="relative py-32 bg-gradient-to-b from-amber-50 via-yellow-50 to-orange-50 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden opacity-30">
         {[...Array(8)].map((_, i) => (
           <div
@@ -245,10 +244,9 @@ function CardsScrollAnimation() {
 
   return (
     <section className="py-24 bg-gradient-to-b from-amber-50 via-yellow-50 to-orange-50">
-      
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
-<div className="relative py-32 bg-gradient-to-b from-white-50 via-amber-100 to-white-100 overflow-hidden">
+          <div className="relative py-32 bg-gradient-to-b from-white-50 via-amber-100 to-white-100 overflow-hidden">
             <div className="bg-gradient-to-r from-amber-600 to-yellow-700 text-white text-center py-6">
             </div>
 
@@ -267,10 +265,6 @@ function CardsScrollAnimation() {
                     alt={`Comic Panel ${comicPanels[currentPanel].id}`}
                     className="w-full h-half object-cover"
                   />
-                  
-                  
-                        
-                        
                 </motion.div>
               </AnimatePresence>
 
@@ -360,7 +354,6 @@ function CardsScrollAnimation() {
   );
 }
 
-
 export default function Index() {
   const images = [
     "https://assets.aceternity.com/cloudinary_bkp/3d-card.png",
@@ -397,77 +390,80 @@ export default function Index() {
   ];
 
   const tabs = [
-    {
-      title: "International & Indian Language Support",
-      value: "product",
-      content: (
-        <FeatureCard
-          icon={<Globe className="w-6 h-6 text-white" />}
-          title="International & Indian Language Support"
-          description="Understands customer calls in any language with 95%+ accuracy"
-        />
-      ),
-    },
-    {
-      title: "Detects All Revenue Leaks",
-      value: "Detects All Revenue Leaks",
-      content: (
-        <FeatureCard
-          icon={<Settings className="w-6 h-6 text-white" />}
-          title="Detects All Revenue Leaks"
-          description="Spots churn risk, repeat complaints, overcharging, missed follow-ups, and poor service signals."
-        />
-      ),
-    },
-    {
-      title: "Automatic Complaint Classification",
-      value: "Automatic Complaint Classification",
-      content: (
-        <FeatureCard
-          icon={<FlaskConical className="w-6 h-6 text-white" />}
-          title="Automatic Complaint Classification"
-          description="Instantly tags and organizes complaints into actionable categories—no manual effort needed."
-        />
-      ),
-    },
-    {
-      title: "100% Visibility on All Recorded Calls",
-      value: "100% Visibility on All Recorded Calls",
-      content: (
-        <FeatureCard
-          icon={<PhoneCall className="w-6 h-6 text-white" />}
-          title="Content Hub"
-          description="Reviews of all customer calls including Maintenance Reminders and Post Service Follow Up."
-        />
-      ),
-    },
-    {
-      title: "Customer Sentiment Score",
-      value: "Customer Sentiment Score",
-      content: (
-        <FeatureCard
-          icon={<Sparkles className="w-6 h-6 text-white" />}
-          title="Random Insight"
-          description="Measures how happy or frustrated each customer is, using voice tone and language cues."
-        />
-      ),
-    },
-    {
-      title: "Voice of Customer Dashboard",
-      value: "Voice of Customer Dashboard",
-      content: (
-        <FeatureCard
-          icon={<Sparkles className="w-6 h-6 text-white" />}
-          title="Random Insights"
-          description="One powerful dashboard to track negative & positive feedback, trends, and team performance."
-        />
-      ),
-    },
-  ];
+  {
+    title: "Global Language Intelligence",
+    value: "product",
+    content: (
+      <FeatureCard
+        icon={<Globe className="w-6 h-6 text-white" />}
+        title="Global Language Intelligence"
+        description="AI-powered multilingual understanding with 95%+ accuracy across international and Indian languages"
+      />
+    ),
+  },
+  {
+    title: "Revenue Leak Detection",
+    value: "Detects All Revenue Leaks",
+    content: (
+      <FeatureCard
+        icon={<Settings className="w-6 h-6 text-white" />}
+        title="Revenue Leak Detection"
+        description="Advanced analytics to identify churn risks, billing issues, service gaps, and missed opportunities"
+      />
+    ),
+  },
+  {
+    title: "Smart Complaint Categorization",
+    value: "Automatic Complaint Classification",
+    content: (
+      <FeatureCard
+        icon={<FlaskConical className="w-6 h-6 text-white" />}
+        title="Smart Complaint Categorization"
+        description="Intelligent auto-tagging system that organizes feedback into actionable business insights"
+      />
+    ),
+  },
+  {
+    title: "Complete Call Analytics",
+    value: "100% Visibility on All Recorded Calls",
+    content: (
+      <FeatureCard
+        icon={<PhoneCall className="w-6 h-6 text-white" />}
+        title="Complete Call Analytics"
+        description="Comprehensive analysis of every customer interaction including service follow-ups and maintenance alerts"
+      />
+    ),
+  },
+  {
+    title: "Customer Happiness Index",
+    value: "Customer Sentiment Score",
+    content: (
+      <FeatureCard
+        icon={<Sparkles className="w-6 h-6 text-white" />}
+        title="Customer Happiness Index"
+        description="Real-time emotion detection through voice patterns and conversation analysis"
+      />
+    ),
+  },
+  {
+    title: "Voice Insights Dashboard",
+    value: "Voice of Customer Dashboard",
+    content: (
+      <FeatureCard
+        icon={<Sparkles className="w-6 h-6 text-white" />}
+        title="Voice Insights Dashboard"
+        description="Centralized command center for tracking sentiment trends, team performance, and business impact"
+      />
+    ),
+  },
+];
+
 
   return (
     <div className="bg-gradient-to-b from-amber-50 via-yellow-50 to-orange-50 text-[#333333]">
       <Navbar />
+      
+      {/* Hero Section with 3D Marquee */}
       <div className="relative h-[40rem] overflow-hidden">
         <ThreeDMarquee images={images} />
         <div className="absolute inset-0 bg-amber-900/60 z-10" />
@@ -494,22 +490,30 @@ export default function Index() {
         </div>
       </div>
 
+      {/* Text Generate Effect Section */}
       <div className="container mx-auto px-6 py-24 max-w-6xl text-center">
-  <div   className="text-5xl md:text-7xl font-extrabold text-amber-900">
-    <TextGenerateEffect words={words} />
-  </div>
-</div>
+        <div className="text-5xl md:text-7xl font-extrabold text-amber-900">
+          <TextGenerateEffect words={words} />
+        </div>
+      </div>
 
-            <Hero />
+      {/* Hero Component */}
+      <div className="relative z-10 mb-20">
+        <Hero />
+      </div>
 
-      <MysteryHeading />
-
-      <CardsScrollAnimation />
-
-      <div className="w-full px-4 md:px-0 max-w-17xl mx-auto mt-20 mb-40">
+      {/* Tabs Section - Now positioned between Hero and Mystery Heading */}
+      <div className="relative z-20 w-full px-4 md:px-0 max-w-7xl mx-auto py-20 mb-20 bg-gradient-to-b from-white to-amber-50">
         <Tabs tabs={tabs} />
       </div>
 
+      {/* Mystery Heading */}
+      <div className="relative z-10 mt-40">
+        <MysteryHeading />
+      </div>
+
+      {/* Cards Scroll Animation */}
+      <CardsScrollAnimation />
     </div>
   );
 }
