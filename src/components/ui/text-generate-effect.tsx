@@ -1,58 +1,65 @@
 "use client";
 
-import { useEffect } from "react";
-import { motion, stagger, useAnimate } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
-export const TextGenerateEffect = ({
+export const TypewriterEffectSmooth = ({
   words,
   className,
-  filter = true,
-  duration = 0.5,
 }: {
-  words: string;
+  words: {
+    text: string;
+    className?: string;
+  }[];
   className?: string;
-  filter?: boolean;
-  duration?: number;
 }) => {
-  const [scope, animate] = useAnimate();
-  const wordsArray = words.split(" ");
+  const wordsArray = words.map((word) => ({
+    ...word,
+    text: word.text.split(""),
+  }));
 
-  useEffect(() => {
-    animate(
-      "span",
-      {
-        opacity: 1,
-        filter: filter ? "blur(0px)" : "none",
-      },
-      {
-        duration,
-        delay: stagger(0.38),
-      }
+  const renderWords = () => {
+    return (
+      <div className="flex flex-wrap justify-center gap-x-2 text-center leading-relaxed">
+        {wordsArray.map((word, wordIdx) => (
+          <div key={`word-${wordIdx}`} className="block">
+            {word.text.map((char, charIdx) => (
+              <motion.span
+                key={`char-${wordIdx}-${charIdx}`}
+                initial={{ opacity: 0, y: 5 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  delay: (wordIdx * 0.1) + (charIdx * 0.02),
+                  ease: "easeOut",
+                }}
+                className={cn("text-slate-800 dark:text-white", word.className)}
+              >
+                {char}
+              </motion.span>
+            ))}
+            &nbsp;
+          </div>
+        ))}
+      </div>
     );
-  }, [scope.current]);
-
-  const renderWords = () => (
-    <motion.div ref={scope}>
-      {wordsArray.map((word, idx) => (
-        <motion.span
-          key={word + idx}
-          className="dark:text-white text-black opacity-0"
-          style={{
-            filter: filter ? "blur(10px)" : "none",
-          }}
-        >
-          {word}{" "}
-        </motion.span>
-      ))}
-    </motion.div>
-  );
+  };
 
   return (
-    <div className={cn("font-bold", className)}>
-      <div className={cn("leading-snug tracking-wide", className)}>
-        {renderWords()}
-      </div>
+    <div className={cn("flex items-center justify-center flex-wrap", className)}>
+      <motion.div
+        className="text-center"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{
+          duration: 1.2,
+          ease: "easeOut",
+        }}
+      >
+        <div className="text-lg sm:text-xl md:text-3xl lg:text-5xl font-semibold max-w-4xl mx-auto">
+          {renderWords()}
+        </div>
+      </motion.div>
     </div>
   );
 };
