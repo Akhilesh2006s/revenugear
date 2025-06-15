@@ -32,9 +32,9 @@ const words = `95% of customer calls at a vehicle dealership are never reviewed.
 
 // Card data with natural sizing
 const cardData = [
-  { image: "/1.jpg" },
-  { image: "./public/2.jpg" },
-  { image: "src/pages/3.jpg" },
+  { image: "./1.jpg" },
+  { image: "./public/1.jpg" },
+  { image: "public/1.jpg" },
   { image: "src/pages/4.jpg" },
   { image: "src/pages/5.jpg" },
   { image: "src/pages/6.jpg" },
